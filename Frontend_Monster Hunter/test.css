@@ -1,14 +1,38 @@
+* {
+    box-sizing: border-box;
+}
 
-.GS-Element{
-    display: inline-block;
-    vertical-align:baseline;
-    height: 80px;
-    width: 12%;
+body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+.card-wrapper {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    background-color: rgb(53, 51, 29);
+
+}
+
+.GS-Element {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    width: 29rem;
     color: darkgray;
+    background-color: white;
     border: 2px solid black;
-    margin: 1rem;
+    margin: 0.5rem;
     padding: 1rem;
     letter-spacing: 1px;
+    flex-wrap: wrap;
+}
+
+.GS-Element-0 {
+    background-color: aquamarine;
 }
 
 .element-icon {
@@ -18,14 +42,16 @@
     width: 20px;
     margin: 0px;
     padding: 0px;
-
 }
 
-.card-wrapper{
-    display: flex;
-    height: 100%;
-    width: 100%;
-    background-color: rgb(53, 51, 29);
-    
-    
+table,
+tr,
+td {
+    border-style: none;
+    border-collapse: collapse;
+}
+
+.gs-title {
+    text-align: left;
+    font-weight: bold;
 }
