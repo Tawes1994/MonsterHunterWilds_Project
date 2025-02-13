@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./test.css">
+    <title>API Monsterhunter</title>
+</head>
+ 
+<body>
+
+
+ <div class="card-wrapper">
+    <div id="list-group"></div>
+</div>
+
+
+<script>
+let listGroup = document.getElementById("list-group");
+
+fetch("https://mhw-db.com/weapons")
+    .then((response) => response.json())
+    .then((data) => {
+        console.log("Erste Daten:", data);
+
+        const Großschwerter = data.filter(data => data.type === "great-sword");
+        console.log("Neu: ", Großschwerter);
+
+        Großschwerter.forEach(GS => {
+            let listGroupElement = document.createElement('div');
+            listGroupElement.setAttribute('id', 'GS-Element');
+            listGroupElement.setAttribute('class', 'GS-Element');
+            
+            // Hole den Elementtyp oder setze "Kein Element"
+            const ElementType = GS.elements.length > 0 ? GS.elements[0].type : "Kein Element";
+            const Slot = GS.slots.length > 0 ? GS.slots.map(slot => `Stufe ${slot.rank}`).join(", ") : "Kein Slot";
+            const ElderSeal = GS.elderseal?.affinity || "Kein Siegel";
+            
+            // Mappe das Element auf ein entsprechendes Icon
+            let ElementIcon = "";
+            switch (ElementType) {
+                case "fire":
+                    ElementIcon = '<img class="element-icon" src="./assets/images/Elemente/fireblight.png"></img>';
+                    break;
+                case "ice":
+                    ElementIcon = '<i class="fas fa-snowflake"></i>';
+                    break;
+                case "water":
+                    ElementIcon = '<i class="fas fa-tint"></i>';
+                    break;
+                case "thunder":
+                    ElementIcon = '<i class="fas fa-bolt"></i>';
+                    break;
+                case "dragon":
+                    ElementIcon = '<i class="fas fa-dragon"></i>';
+                    break;
+                default:
+                    ElementIcon = "Kein Element";
+            }
+            
+            listGroupElement.innerHTML = `Name: ${GS.name} Attack: ${GS.attack.display} Seltenheit: ${GS.rarity} Elderseal: ${ElderSeal} Elemente: ${ElementIcon} Slots: ${Slot}`;
+            listGroup.appendChild(listGroupElement);
+        });
+    });
+</script>
+
+</body>
+</html>

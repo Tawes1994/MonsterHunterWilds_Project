@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/Waffen/tree.css">
+        <title>MHWilds Monsterlist</title>
+    </head>
+    <body>
+        <!--  <ul></ul>  unsortierte Liste -->
+        <header>
+            <nav class="navigation">
+                <div class="navigation-wrapper">
+                    <div class="navigation-left-container">
+                        <a href="/index.html">
+                            <img class="MonsterHunterLogo"
+                                src="/assets/images/Logoklein.png"
+                                alt="Monster Hunter Wilds Logo">
+                        </a>
+                    </div>
+                    <div class="navigation-right-container">
+                        <ul class="nav-list">
+                            <li class="list-group-element"><a href="/index.html"
+                                    class="navigation-link">Startseite</a></li>
+                            <li class="list-group-element"><a
+                                    href="/Monster/Monster.html"
+                                    class="navigation-link">Monster</a></li>
+                            <li class="list-group-element"><a href="waffen.html"
+                                    class="navigation-link active">Waffen</a></li>
+                            <li class="list-group-element"><a href="/Waffen/waffen.html"
+                                    class="navigation-link">Crafting</a></li>
+                            <li class="list-group-element"><a href
+                                    class="navigation-link">Leitpfaden</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="header-layout-container-monster">
+                <div class="button-area">
+                    <div class="button-wrapper">
+                        <button class="button">EK</button>
+                        <button class="button">SnS</button>
+                        <button class="button">GL</button>
+                        <button class="button">LS</button>
+                        <button class="button">DB</button>
+
+                    </div>
+                </div>
+                <!-- Directory Struktur-->
+                <div id="fontSizeWrapper">
+                  </div>
+                  <ul class="tree">
+                    <li>
+                      <input type="checkbox" checked="checked" id="c1" />
+                      <label class="tree_label" for="c1">Rathalos-Baum</label>
+                      <ul>
+                        <li>
+                          <input type="checkbox" checked="checked" id="c2" />
+                          <label for="c2" class="tree_label">Stufe 1</label>
+                          <ul>
+                            <li><span class="tree_label">Stufe 2</span></li>
+                            <li><span class="tree_label">Stufe 2</span></li>
+                          </ul>
+                        </li>
+                        <li>
+                          <input type="checkbox" id="c3" />
+                          <label for="c3" class="tree_label">Stufe 1 <br/>Langschwert(Eis)<br/>with line-breaks</label>
+                          <ul>
+                            <li><span class="tree_label">Stufe 2</span></li>
+                            <li>
+                              <input type="checkbox" id="c4" />
+                              <label for="c4" class="tree_label"><span class="tree_custom">Stufe 3</span></label>
+                              <ul>
+                                <li><span class="tree_label">Stufe 4</span></li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    
+                    
+                    <li>
+                      <input type="checkbox" id="c5" />
+                      <label class="tree_label" for="c5">Knochen-Baum</label>
+                      <ul>
+                        <li>
+                          <input type="checkbox" id="c6" />
+                          <label for="c6" class="tree_label">Stufe 1</label>
+                          <ul>
+                            <li><span class="tree_label">Stufe 2</span></li>
+                          </ul>
+                        </li>
+                        <li>
+                          <input type="checkbox" id="c7" />
+                          <label for="c7" class="tree_label">Stufe 1</label>
+                          <ul>
+                            <li><span class="tree_label">Stufe 2</span></li>
+                            <li>
+                              <input type="checkbox" id="c8" />
+                              <label for="c8" class="tree_label">Stufe 2</label>
+                              <ul>
+                                <li><span class="tree_label">Stufe 3</span></li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+            </div>
+        </div>
+    </header>
+    <script src="/main.js" defer></script>
+    <script src="/Waffen/tree.js" defer></script>
+</body>
