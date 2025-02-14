@@ -8,6 +8,10 @@ body {
     background-color: black;
 }
 
+.list-group {
+    z-index: 1;
+}
+
 .card-wrapper {
     display: flex;
     height: 100%;
@@ -30,6 +34,7 @@ body {
     letter-spacing: 1px;
     flex-wrap: wrap;
     visibility: visible;
+    z-index: 2;
 }
 
 .GS-Element-0 {
