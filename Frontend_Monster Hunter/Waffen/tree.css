@@ -376,3 +376,90 @@ label.tree_label:after {
   padding: 1em;
   border-radius: 0.3em;
 }
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+}
+
+.list-group {
+  z-index: 1;
+}
+
+.card-wrapper {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  background-color: rgb(53, 51, 29);
+
+}
+
+.GS-Element {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  width: fit-content;
+  color: darkgray;
+  background-color: rgb(0, 0, 0);
+  border: 2px solid black;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  letter-spacing: 1px;
+  flex-wrap: wrap;
+  visibility: visible;
+  z-index: 2;
+}
+
+.GS-Element-0 {
+  background-color: rgb(50, 48, 48);
+  visibility: visible;
+}
+
+.smallTitle {
+  width: fit-content;
+}
+
+.smallElement {
+  padding-left: 1rem;
+
+}
+
+.element-icon {
+  display: inline-block;
+  vertical-align: bottom;
+  height: 20px;
+  width: 20px;
+  margin: 0px;
+  padding: 0px;
+}
+
+table,
+tr,
+td {
+  border-style: none;
+  border-collapse: collapse;
+}
+
+.bigTbl {
+  font-size: 0.8rem;
+  width: 450px;
+}
+
+.gs-title {
+  text-align: left;
+  font-weight: bold;
+}
+
+.gs-button {
+  text-align: right;
+}
+
+.btn-expand {
+  margin-right: 0.5rem;
+  margin-top: 0.25rem;
+}

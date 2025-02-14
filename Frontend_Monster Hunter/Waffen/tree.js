@@ -55,27 +55,41 @@ document.addEventListener("DOMContentLoaded", () => {
                         : "Kein Slot";
                     const ElderSeal = GS.elderseal?.affinity || "Kein Siegel";
 
-                    // Icon für das Element bestimmen
-                    let ElementIcon = "";
-                    switch (ElementType) {
-                        case "fire":
-                            ElementIcon = '<img class="element-icon" src="./assets/images/Elemente/fireblight.png">';
-                            break;
-                        case "ice":
-                            ElementIcon = '<i class="fas fa-snowflake"> Eis </i>';
-                            break;
-                        case "water":
-                            ElementIcon = '<i class="fas fa-tint"></i>';
-                            break;
-                        case "thunder":
-                            ElementIcon = '<i class="fas fa-bolt"></i>';
-                            break;
-                        case "dragon":
-                            ElementIcon = '<i class="fas fa-dragon"></i>';
-                            break;
-                        default:
-                            ElementIcon = "";
-                    }
+               // Mappe das Element auf ein entsprechendes Icon
+            let ElementIcon = "";
+            switch (ElementType) {
+              case "fire":
+                ElementIcon =
+                  '<img class="element-icon" src="../assets/images/Elemente/fireblight.png"></img>';
+                break;
+              case "ice":
+                ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/iceblight.png"></img>';
+                break;
+              case "water":
+                ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/waterblight.png"></img>';
+                break;
+              case "thunder":
+                ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/thunderblight.webp"></img>';
+                break;
+              case "dragon":
+                ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/dragonblight.png"></img>';
+                break;
+              case "poison":
+                ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/Poison.png"></img>';
+                break;
+              case "blast":
+                ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/blastblight.png"></img>';
+                break;
+              case "paralysis":
+                ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/Paralysis.webp"></img>';
+                break;
+              case "sleep":
+                ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/Sleep.png"></img>';
+                break;
+              default:
+                ElementIcon = "";
+            }
+
 
                     let smallTable = `
                       <table>
