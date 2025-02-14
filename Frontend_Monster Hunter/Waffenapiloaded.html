@@ -69,10 +69,25 @@
                 ElementIcon = '<i class="fas fa-dragon"></i>';
                 break;
               default:
-                ElementIcon = "Kein Element";
+                ElementIcon = "";
             }
 
-            listGroupElement.innerHTML = `ID: ${GS.id} prev: ${GS.crafting.previous} Name: ${GS.name} Attack: ${GS.attack.display} Seltenheit: ${GS.rarity} Elderseal: ${ElderSeal} Elemente: ${ElementIcon} Slots: ${Slot}`;
+            //listGroupElement.innerHTML = `ID:  ${GS.id} prev: ${GS.crafting.previous} Name: ${GS.name} Attack: ${GS.attack.display} Seltenheit: ${GS.rarity} Elderseal: ${ElderSeal} Elemente: ${ElementIcon} Slots: ${Slot}`;
+
+            const colspan = ElementIcon ? "" : 'colspan="2"';
+
+            let smallTable = `
+              <table>
+                <tr>
+                  <td class="smallTitle" ${colspan}>${GS.name}</td>
+                  ${
+                    ElementIcon
+                      ? `<td class="smallElement">${ElementIcon}</td>`
+                      : ""
+                  }
+                </tr>
+              </table>
+            `;
 
             let tableHTML = `
             <table>
@@ -105,7 +120,7 @@
                 </tr>
             </table>`;
 
-            listGroupElement.innerHTML = tableHTML;
+            listGroupElement.innerHTML = smallTable;
 
             listGroup.appendChild(listGroupElement);
             counter++;
