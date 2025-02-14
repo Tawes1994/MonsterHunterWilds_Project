@@ -20,7 +20,23 @@
       let listGroup = document.getElementById("list-group");
       let counter = 0;
 
-      fetch("https://mhw-db.com/weapons")
+      // toggle
+      function toggleCard(event) {
+        const card = event.currentTarget;
+        const expanded = card.dataset.expanded === "true";
+
+        if (expanded) {
+          // Wenn bereits expandiert, auf SmallTable zurücksetzen
+          card.querySelector(".content").innerHTML = card.dataset.smallTable;
+        } else {
+          // Wenn nicht expandiert, auf TableHTML wechseln
+          card.querySelector(".content").innerHTML = card.dataset.tableHTML;
+        }
+
+        card.dataset.expanded = expanded ? "false" : "true";
+      }
+
+      fetch("/Frontend_Monster Hunter/weapons.json")
         .then((response) => response.json())
         .then((data) => {
           console.log("Erste Daten:", data);
@@ -32,12 +48,19 @@
 
           Großschwerter.forEach((GS) => {
             let listGroupElement = document.createElement("div");
+            let btnCount = document.getElementById("btn-expand");
 
-            listGroupElement.setAttribute("id", "GS-Element");
+            listGroupElement.setAttribute(
+              "id",
+              `GS-Element GS-Element-${counter}`
+            );
             listGroupElement.setAttribute(
               "class",
               `GS-Element GS-Element-${counter}`
             );
+
+            //listen
+            listGroupElement.addEventListener("click", toggleCard);
 
             // Hole den Elementtyp oder setze "Kein Element"
             const ElementType =
@@ -68,13 +91,34 @@
                 ElementIcon = '<i class="fas fa-dragon"></i>';
                 break;
               default:
-                ElementIcon = "Kein Element";
+                ElementIcon = "";
             }
 
-            listGroupElement.innerHTML = `Name: ${GS.name} Attack: ${GS.attack.display} Seltenheit: ${GS.rarity} Elderseal: ${ElderSeal} Elemente: ${ElementIcon} Slots: ${Slot}`;
+            //listGroupElement.innerHTML = `ID:  ${GS.id} prev: ${GS.crafting.previous} Name: ${GS.name} Attack: ${GS.attack.display} Seltenheit: ${GS.rarity} Elderseal: ${ElderSeal} Elemente: ${ElementIcon} Slots: ${Slot}`;
+
+            const colspan = ElementIcon ? "" : 'colspan="2"';
+
+            let smallTable = `
+              <table>
+                <tr>
+                  <td class="smallTitle" ${colspan}>${GS.name}</td>
+                  ${
+                    ElementIcon
+                      ? `<td class="smallElement">${ElementIcon}</td>`
+                      : ""
+                  }
+                </tr>
+              </table>
+            `;
 
             let tableHTML = `
-            <table border="1">
+            <table class="bigTbl">
+                <tr>
+                    <td class="gs-title">ID</td>
+                    <td>: ${GS.id}</td>
+                    <td class="gs-title">Waffe vorher</td>
+                    <td>: ${GS.crafting.previous}</td>
+                </tr>
                 <tr>
                     <td class="gs-title">Name</td>
                     <td>: ${GS.name}</td>
@@ -93,9 +137,19 @@
                     <td class="gs-title">Slots</td>
                     <td>: ${Slot}</td>
                 </tr>
+                <tr class="tb-btn">
+                    <td colspan="4" class="gs-button"><button id="btn-expand">Nächste Stufe</button></td>
+                </tr>
             </table>`;
 
-            listGroupElement.innerHTML = tableHTML;
+            listGroupElement.dataset.smallTable = smallTable;
+            listGroupElement.dataset.tableHTML = tableHTML;
+
+            let contentDiv = document.createElement("div");
+            contentDiv.classList.add("content");
+            contentDiv.innerHTML = smallTable;
+
+            listGroupElement.appendChild(contentDiv);
 
             listGroup.appendChild(listGroupElement);
             counter++;
