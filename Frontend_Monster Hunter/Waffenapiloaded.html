@@ -20,7 +20,7 @@
       let listGroup = document.getElementById("list-group");
       let counter = 0;
 
-      fetch("https://mhw-db.com/weapons")
+      fetch("/weapons.json")
         .then((response) => response.json())
         .then((data) => {
           console.log("Erste Daten:", data);
@@ -32,6 +32,7 @@
 
           Großschwerter.forEach((GS) => {
             let listGroupElement = document.createElement("div");
+            let btnCount = document.getElementById("btn-expand");
 
             listGroupElement.setAttribute("id", "GS-Element");
             listGroupElement.setAttribute(
@@ -71,10 +72,16 @@
                 ElementIcon = "Kein Element";
             }
 
-            listGroupElement.innerHTML = `Name: ${GS.name} Attack: ${GS.attack.display} Seltenheit: ${GS.rarity} Elderseal: ${ElderSeal} Elemente: ${ElementIcon} Slots: ${Slot}`;
+            listGroupElement.innerHTML = `ID: ${GS.id} prev: ${GS.crafting.previous} Name: ${GS.name} Attack: ${GS.attack.display} Seltenheit: ${GS.rarity} Elderseal: ${ElderSeal} Elemente: ${ElementIcon} Slots: ${Slot}`;
 
             let tableHTML = `
-            <table border="1">
+            <table>
+                <tr>
+                    <td class="gs-title">ID</td>
+                    <td>: ${GS.id}</td>
+                    <td class="gs-title">Waffe vorher</td>
+                    <td>: ${GS.crafting.previous}</td>
+                </tr>
                 <tr>
                     <td class="gs-title">Name</td>
                     <td>: ${GS.name}</td>
@@ -92,6 +99,9 @@
                     <td>: ${ElementIcon}</td>
                     <td class="gs-title">Slots</td>
                     <td>: ${Slot}</td>
+                </tr>
+                <tr class="tb-btn">
+                    <td colspan="4" class="gs-button"><button id="btn-expand">Nächste Stufe</button></td>
                 </tr>
             </table>`;
 

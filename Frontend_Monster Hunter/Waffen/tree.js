@@ -1,3 +1,27 @@
+
+async function fetchWeapons() {
+  const cachedData = localStorage.getItem("weaponData");
+
+  if (cachedData) {
+      console.log("Daten aus Cache geladen");
+      return JSON.parse(cachedData);
+  }
+
+  console.log("Daten von API geladen");
+  const response = await fetch("https://mhw-db.com/weapons");
+  const weapons = await response.json();
+
+  // Speichere die Daten temporär im localStorage für 10 Minuten
+  localStorage.setItem("weaponData", JSON.stringify(weapons));
+  localStorage.setItem("cacheTime", Date.now());
+
+  return weapons;
+}
+
+
+
+
+
 function isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }

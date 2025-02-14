@@ -29,10 +29,12 @@ body {
     padding: 1rem;
     letter-spacing: 1px;
     flex-wrap: wrap;
+    visibility: visible;
 }
 
 .GS-Element-0 {
-    background-color: aquamarine;
+    background-color: rgb(0, 0, 0);
+    visibility: visible;
 }
 
 .element-icon {
@@ -54,4 +56,13 @@ td {
 .gs-title {
     text-align: left;
     font-weight: bold;
+}
+
+.gs-button {
+    text-align: right;
+}
+
+.btn-expand {
+    margin-right: 0.5rem;
+    margin-top: 0.25rem;
 }
