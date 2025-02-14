@@ -20,6 +20,22 @@
       let listGroup = document.getElementById("list-group");
       let counter = 0;
 
+      // toggle
+      function toggleCard(event) {
+        const card = event.currentTarget;
+        const expanded = card.dataset.expanded === "true";
+
+        if (expanded) {
+          // Wenn bereits expandiert, auf SmallTable zurücksetzen
+          card.querySelector(".content").innerHTML = card.dataset.smallTable;
+        } else {
+          // Wenn nicht expandiert, auf TableHTML wechseln
+          card.querySelector(".content").innerHTML = card.dataset.tableHTML;
+        }
+
+        card.dataset.expanded = expanded ? "false" : "true";
+      }
+
       fetch("/Frontend_Monster Hunter/weapons.json")
         .then((response) => response.json())
         .then((data) => {
@@ -34,11 +50,17 @@
             let listGroupElement = document.createElement("div");
             let btnCount = document.getElementById("btn-expand");
 
-            listGroupElement.setAttribute("id", "GS-Element");
+            listGroupElement.setAttribute(
+              "id",
+              `GS-Element GS-Element-${counter}`
+            );
             listGroupElement.setAttribute(
               "class",
               `GS-Element GS-Element-${counter}`
             );
+
+            //listen
+            listGroupElement.addEventListener("click", toggleCard);
 
             // Hole den Elementtyp oder setze "Kein Element"
             const ElementType =
@@ -90,7 +112,7 @@
             `;
 
             let tableHTML = `
-            <table>
+            <table class="bigTbl">
                 <tr>
                     <td class="gs-title">ID</td>
                     <td>: ${GS.id}</td>
@@ -120,7 +142,14 @@
                 </tr>
             </table>`;
 
-            listGroupElement.innerHTML = smallTable;
+            listGroupElement.dataset.smallTable = smallTable;
+            listGroupElement.dataset.tableHTML = tableHTML;
+
+            let contentDiv = document.createElement("div");
+            contentDiv.classList.add("content");
+            contentDiv.innerHTML = smallTable;
+
+            listGroupElement.appendChild(contentDiv);
 
             listGroup.appendChild(listGroupElement);
             counter++;
