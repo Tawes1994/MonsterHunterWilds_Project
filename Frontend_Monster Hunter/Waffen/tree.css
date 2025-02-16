@@ -224,85 +224,102 @@ button:active {
 
 }
 
-/* TREE */
+/* checkbox */
 
 .list-group {
   display: flex;
-  flex-grow: 1;
+  width: 100%;
+  background-color: #0000005e;
   /* Button Area hat 10rem, man kann mit width: calc() arbeiten, aber flex-grow nimmt sich einfach den übrigen Platz*/
+  z-index: 1;
 }
 
-#fontSizeWrapper {
-  font-size: 16px;
-}
 
-#fontSize {
-  width: 100px;
-  font-size: 1em;
-}
 
 /* ————————————————————–
-    Tree core styles
-  */
-.tree {
-  margin: 1em;
-}
-
-.tree input {
-  position: absolute;
-  clip: rect(0, 0, 0, 0);
-}
-
-.tree input~ul {
+  checkbox core styles
+*/
+ul.ul_tree {
   display: none;
 }
 
-.tree input:checked~ul {
+.li_tree,
+.ul_tree {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.checkbox {
+  margin: 0;
+}
+
+.checkbox {
+  display: absolut;
+  opacity: 0;
+
+}
+
+.checkbox input~.ul_tree {
+  display: none;
+}
+
+.checkbox input:checked~.ul_tree {
   display: block;
 }
 
 /* ————————————————————–
-    Tree rows
-  */
-.tree li {
-  line-height: 1.2;
+  checkbox rows
+*/
+.checkbox .li_tree {
+  line-height: 0;
   position: relative;
   padding: 0 0 1em 1em;
 }
 
-.tree ul li {
+.checkbox .ul_tree .li_tree {
   padding: 1em 0 0 1em;
 }
 
-.tree>li:last-child {
+.checkbox>li:last-child {
   padding-bottom: 0;
 }
 
 /* ————————————————————–
-    Tree labels
-  */
-.tree_label {
+  checkbox labels
+*/
+
+
+
+.tree_label,
+.label_child {
   position: relative;
-  display: inline-block;
-  font-family: "roboto-bold";
+  width: fit-content;
+  background: #000;
+  color: white;
   letter-spacing: 1px;
-  color: lightgreen;
+  padding: 0.3rem;
+  border: 0.1rem solid cyan;
+  border-radius: 0.5rem;
 }
 
-label.tree_label {
+label.tree_label,
+label.label_child {
   cursor: pointer;
 }
 
-label.tree_label:hover {
+label.tree_label:hover,
+label.label_child:hover {
   color: #666;
 }
 
 /* ————————————————————–
-    Tree expanded icon
-  */
-label.tree_label:before {
+  checkbox expanded icon
+*/
+label.tree_label:before,
+label.label_child:before {
   background: #000;
-  color: #fff;
+  color: #1eff00;
   position: relative;
   z-index: 1;
   float: left;
@@ -315,79 +332,107 @@ label.tree_label:before {
   line-height: .9em;
 }
 
-:checked~label.tree_label:before {
+:checked~label.tree_label:before,
+:checked~label.label_child:before {
+  color: red;
   content: '–';
 }
 
 /* ————————————————————–
-    Tree branches
-  */
-.tree li:before {
+  checkbox branches
+*/
+.checkbox .li_tree:before {
   position: absolute;
   top: 0;
   bottom: 0;
   left: -.5em;
   display: block;
   width: 0;
-  border-left: 1px solid #777;
+  border-left: 50px solid #777;
   content: "";
 }
 
-.tree_label:after {
-  position: absolute;
+.tree_label:after,
+.label_child:after {
+  position: relative;
   top: 0;
   left: -1.5em;
-  display: block;
-  height: 0.5em;
+  bottom: 0;
+  display: inline;
+  height: 1em;
   width: 1em;
-  border-bottom: 1px solid #777;
-  border-left: 1px solid #777;
-  border-radius: 0 0 0 .3em;
+  border-radius: 0 0 0 0.3em;
   content: '';
 }
+
+
 
 label.tree_label:after {
   border-bottom: 0;
 }
 
 :checked~label.tree_label:after {
+  content: "";
+  position: absolute;
   border-radius: 0 .3em 0 0;
   border-top: 1px solid #777;
   border-right: 1px solid #777;
   border-bottom: 0;
   border-left: 0;
   bottom: 0;
-  top: 0.5em;
-  height: auto;
+  top: 0.8em;
+  height: 500%;
 }
 
-.tree li:last-child:before {
+.label_child::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  /* Positionieren */
+  top: 0;
+  width: 2px;
+  /* Dicke der Linie */
+  height: 100%;
+  /* Höhe der Linie */
+  background-color: #777;
+  /* Farbe der Linie */
+}
+
+:checked~label.label_child:after {
+  content: "";
+  position: absolute;
+  border-radius: 0 .3em 0 0;
+  border-top: 1px solid #777;
+  border-right: 1px solid #777;
+  border-bottom: 0;
+  border-left: 0;
+  bottom: 0;
+  top: 0.8em;
+  height: 500%;
+}
+
+.checkbox .li_tree:last-child:before {
   height: 1em;
   bottom: auto;
 }
 
-.tree>li:last-child:before {
+.checkbox>.li_tree:last-child:before {
   display: none;
 }
 
 .tree_custom {
   display: block;
-
+  background: #eee;
   padding: 1em;
   border-radius: 0.3em;
 }
-* {
-  box-sizing: border-box;
+
+.weapon-details {
+  display: none;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: black;
-}
-
-.list-group {
-  z-index: 1;
+input.checkbox:checked+label+.weapon-details {
+  display: block;
 }
 
 .card-wrapper {
@@ -438,28 +483,30 @@ body {
   padding: 0px;
 }
 
+.weapon-details {
+  width: fit-content;
+  background-color: #000;
+  color: white;
+  font-size: 1rem;
+  margin-top: 1rem;
+  margin-left: 4rem;
+  padding: 0.5rem;
+  border: lime solid 0.2rem;
+  border-radius: 1rem;
+}
+
 table,
 tr,
 td {
-  border-style: none;
+  border-bottom: 1px solid burlywoodq;
   border-collapse: collapse;
 }
 
 .bigTbl {
-  font-size: 0.8rem;
   width: 450px;
 }
 
 .gs-title {
   text-align: left;
   font-weight: bold;
-}
-
-.gs-button {
-  text-align: right;
-}
-
-.btn-expand {
-  margin-right: 0.5rem;
-  margin-top: 0.25rem;
 }

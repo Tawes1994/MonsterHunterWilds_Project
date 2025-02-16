@@ -41,121 +41,138 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             });
 
+            // Speicher für später im Code
+            let weaponElements = {};
+
             // Funktion zum Erstellen des Waffentraums
             function createWeaponTree(weapons) {
-                const ul = document.createElement("ul");
-                weapons.forEach((GS) => {
-                    const li = document.createElement('li');
-                    const id = `weapon_${counter++}`;
+                let treeRoot = document.createElement("ul");
+                let weaponElements = {};
 
-
-                    let weaponDetails = document.createElement("div");
-                    weaponDetails.setAttribute("id", `GS-Element-${counter}`);
-                    weaponDetails.setAttribute("class", `GS-Element`);
-                    weaponDetails.addEventListener("click", toggleCard);
-
-                    // Waffenelemente aus JSON extrahieren
-                    const ElementType = GS.elements.length > 0 ? GS.elements[0].type : "Kein Element";
-                    const Slot = GS.slots.length > 0
-                        ? GS.slots.map(slot => `Stufe ${slot.rank}`).join(", ")
-                        : "Kein Slot";
-                    const ElderSeal = GS.elderseal?.affinity || "Kein Siegel";
-
-                    // Mappe das Element auf ein entsprechendes Icon
-                    let ElementIcon = "";
-                    switch (ElementType) {
-                        case "fire":
-                            ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/fireblight.png"></img>';
-                            break;
-                        case "ice":
-                            ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/iceblight.png"></img>';
-                            break;
-                        case "water":
-                            ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/waterblight.png"></img>';
-                            break;
-                        case "thunder":
-                            ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/thunderblight.webp"></img>';
-                            break;
-                        case "dragon":
-                            ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/dragonblight.png"></img>';
-                            break;
-                        case "poison":
-                            ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/Poison.png"></img>';
-                            break;
-                        case "blast":
-                            ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/blastblight.png"></img>';
-                            break;
-                        case "paralysis":
-                            ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/Paralysis.webp"></img>';
-                            break;
-                        case "sleep":
-                            ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/Sleep.png"></img>';
-                            break;
-                        default:
-                            ElementIcon = "";
-                    }
-
-                    let smallTable = `
-                        <table>
-                            <tr>
-                                <td class="smallTitle">${GS.name}</td>
-                                ${ElementIcon ? `<td class="smallElement">${ElementIcon}</td>` : ""}
-                            </tr>
-                        </table>`;
-
-                    let tableHTML = `
-                        <table class="bigTbl">
-                            <tr>
-                                <td class="gs-title">ID</td>
-                                <td>: ${GS.id}</td>
-                                <td class="gs-title">Waffe vorher</td>
-                                <td>: ${GS.crafting.previous}</td>
-                            </tr>
-                            <tr>
-                                <td class="gs-title">Name</td>
-                                <td>: ${GS.name}</td>
-                                <td class="gs-title">Attack</td>
-                                <td>: ${GS.attack.display}</td>
-                            </tr>
-                            <tr>
-                                <td class="gs-title">Seltenheit</td>
-                                <td>: ${GS.rarity}</td>
-                                <td class="gs-title">Elderseal</td>
-                                <td>: ${ElderSeal}</td>
-                            </tr>
-                            <tr>
-                                <td class="gs-title">Element</td>
-                                <td>: ${ElementIcon}</td>
-                                <td class="gs-title">Slots</td>
-                                <td>: ${Slot}</td>
-                            </tr>
-                            <tr class="tb-btn">
-                                <td colspan="4" class="gs-button">
-                                    <button id="btn-expand">Nächste Stufe</button>
-                                </td>
-                            </tr>
-                        </table>`;
-
-                    weaponDetails.dataset.smallTable = smallTable;
-                    weaponDetails.dataset.tableHTML = tableHTML;
-
-                    let contentDiv = document.createElement("div");
-                    contentDiv.classList.add("content");
-                    contentDiv.htmlFor = id;
-                    contentDiv.classList.add("label");
-                    contentDiv.classList.add("tree_label");
-                    contentDiv.innerHTML = smallTable;
-
-
-                    li.appendChild(contentDiv);
-
-                    weaponDetails.appendChild(contentDiv);
-                    li.appendChild(weaponDetails);
-
-                    ul.appendChild(li);
+                // **1. Durchlauf: Erstelle alle Waffen-Elemente**
+                weapons.forEach(GS => {
+                    let weaponElement = createWeaponElement(GS);
+                    weaponElements[GS.id] = weaponElement;  // **Richtig speichern**
                 });
 
-                return ul;
+                // **2. Durchlauf: Baue die Hierarchie**
+                weapons.forEach(GS => {
+                    let weaponElement = weaponElements[GS.id];
+                    const secChild = weaponElement.children[1];
+                    let parentID = GS.crafting?.previous;
+
+                    if (!parentID || parentID === GS.id) {
+                        treeRoot.appendChild(weaponElement);
+                        return;
+                    }
+
+                    let parentLI = weaponElements[parentID];
+                    if (secChild) {
+                        secChild.setAttribute('class', 'label_child');
+                    }
+                    if (parentLI) {
+                        parentLI.querySelector("ul").appendChild(weaponElement);
+                    } else {
+                        treeRoot.appendChild(weaponElement);
+                    }
+                });
+
+                return treeRoot;
+            }
+
+
+            function createWeaponElement(GS) {
+                const li = document.createElement('li');
+                li.setAttribute('class', 'li_tree')
+                const id = `weapons_${counter++}`;
+
+                const ElementType = GS.elements.length > 0 ? GS.elements[0].type : "Kein Element";
+                const Slot = GS.slots.length > 0
+                    ? GS.slots.map(slot => `Stufe ${slot.rank}`).join(", ")
+                    : "Kein Slot";
+                const ElderSeal = GS.elderseal?.affinity || "Kein Siegel";
+
+                let ElementIcon = "";
+                switch (ElementType) {
+                    case "fire":
+                        ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/fireblight.png"></img>';
+                        break;
+                    case "ice":
+                        ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/iceblight.png"></img>';
+                        break;
+                    case "water":
+                        ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/waterblight.png"></img>';
+                        break;
+                    case "thunder":
+                        ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/thunderblight.webp"></img>';
+                        break;
+                    case "dragon":
+                        ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/dragonblight.png"></img>';
+                        break;
+                    case "poison":
+                        ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/Poison.png"></img>';
+                        break;
+                    case "blast":
+                        ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/blastblight.png"></img>';
+                        break;
+                    case "paralysis":
+                        ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/Paralysis.webp"></img>';
+                        break;
+                    case "sleep":
+                        ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/Sleep.png"></img>';
+                        break;
+                    default:
+                        ElementIcon = "";
+                }
+
+                let tableHTML = `
+                <input type="checkbox" id="${id}" class="checkbox"/>
+                    <label class="tree_label" for="${id}">
+                        <span class="label">${GS.name} ${GS.attack.display}</span>
+                    </label>
+                    <div class="weapon-details">
+                    <table class="bigTbl">
+                        <tr>
+                            <td class="gs-title">ID</td>
+                            <td>: ${GS.id}</td>
+                            <td class="gs-title">Waffe vorher</td>
+                            <td>: ${GS.crafting.previous || "Keine"}</td>
+                        </tr>
+                        <tr>
+                            <td class="gs-title">Name</td>
+                            <td>: ${GS.name}</td>
+                            <td class="gs-title">Attack</td>
+                            <td>: ${GS.attack.display}</td>
+                        </tr>
+                        <tr>
+                            <td class="gs-title">Seltenheit</td>
+                            <td>: ${GS.rarity}</td>
+                            <td class="gs-title">Elderseal</td>
+                            <td>: ${ElderSeal}</td>
+                        </tr>
+                        <tr>
+                            <td class="gs-title">Element</td>
+                            <td>: ${ElementIcon}</td>
+                            <td class="gs-title">Slots</td>
+                            <td>: ${Slot}</td>
+                        </tr>
+                    </table>
+                </label>`;
+
+                li.innerHTML = tableHTML;
+                let subTree = document.createElement('ul');
+                subTree.setAttribute('class', 'ul_tree');
+                let checkbox = li.querySelector(".checkbox");
+                checkbox.addEventListener("change", () => {
+                    let isChecked = checkbox.checked;
+                    li.querySelector(".weapon-details").style.display = isChecked ? "flex" : "none";
+                    subTree.style.display = isChecked ? "flex" : "none";
+                });
+
+                li.appendChild(subTree);
+                weaponElements[GS.id] = subTree;
+
+                return li;
             }
         })
         .catch(error => console.error("Fehler beim Laden der JSON-Daten:", error));
