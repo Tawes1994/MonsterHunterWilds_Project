@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         card.dataset.expanded = expanded ? "false" : "true";
     }
 
-    fetch("/Frontend_Monster Hunter/weapons.json")
+    fetch("/Frontend_MonsterHunter/weapons.json")
         .then(response => response.json())
         .then(data => {
             console.log("Geladene Waffen:", data);
