@@ -1,23 +1,30 @@
-// Hole die Monster-Daten von der API (lokale JSON-Datei)
-fetch("/Frontend_MonsterHunter/Monster/monster_api.json")
-    .then(response => response.json()) // Wandle die JSON-Antwort in ein JavaScript-Objekt um
+fetch("https://mhw-db.com/monsters")
+    .then(response => response.json())
     .then(data => {
-        // Hole den Container, in dem die Monsterkarten angezeigt werden sollen
-        const monsterList = document.getElementById("monster-list");
+        const monsterListContainer = document.getElementById("monster-list");
 
-        // Durchlaufe jedes Monster in den Daten und erstelle eine Karte für jedes Monster
         data.forEach(monster => {
-            // Erstelle ein neues div für die Monsterkarte
+            // Monsterkarte erstellen
             const monsterCard = document.createElement("div");
-            monsterCard.classList.add("monster-card"); // Füge der Karte die CSS-Klasse hinzu
+            monsterCard.classList.add("monster-card");
 
-            // Füge den Inhalt der Karte hinzu (Name und Beschreibung des Monsters)
-            monsterCard.innerHTML = `
-                <h3 class="monster-name">${monster.name}</h3>
-                <p class="monster-description">${monster.description || 'Keine Beschreibung verfügbar.'}</p>
-            `;
+            // Monster-Name hinzufügen
+            const monsterName = document.createElement("h3");
+            monsterName.classList.add("monster-name");
+            monsterName.textContent = monster.name;
 
-            // Füge die Monsterkarte zum Monster-Container hinzu
-            monsterList.appendChild(monsterCard);
+            // Monster-Icon hinzufügen
+            const monsterIcon = document.createElement("img");
+            monsterIcon.classList.add("monster-icon");
+            // Hier den Pfad zum heruntergeladenen Bild setzen
+            monsterIcon.src = `../assets/images/monstericons/${monster.name.toLowerCase().replace(/ /g, '-')}.png`;
+            monsterIcon.alt = `${monster.name} Icon`;
+
+            // Die Karte zusammenbauen
+            monsterCard.appendChild(monsterIcon);  // Icon zuerst, dann Name
+            monsterCard.appendChild(monsterName);
+
+            // Karte der Monsterliste hinzufügen
+            monsterListContainer.appendChild(monsterCard);
         });
     });

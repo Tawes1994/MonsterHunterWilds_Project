@@ -9,6 +9,8 @@
 }
 
 .monster-card {
+    display: flex;
+    align-items: center;
     background: #1d1d1d;
     color: #fff;
     padding: 20px;
@@ -26,38 +28,34 @@
 
 /* Der Name des Monsters */
 .monster-name {
-    font-size: 1.2rem;
+    font-size: 18px;
     font-weight: bold;
-    margin-bottom: 10px;
-    text-align: center; /* Name zentriert auf der Karte */
-}
-
-/* Beschreibung des Monsters */
-.monster-description {
-    font-size: 1rem;
-    color: #ccc;
-    margin-top: 10px;
-    text-align: center; /* Beschreibung ebenfalls zentriert */
-}
-
-/* Dein bestehendes CSS für .monster-item */
-.monster-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-strong {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Optional: Styling für Links, wenn du diese später hinzufügst */
-.monster-card a {
-    color: #fff;
-    text-decoration: none;
-    margin-top: 15px;
-    display: block;
+    margin: 0;
     text-align: center;
 }
+
+/* Monster Typ */
+.monster-type, .monster-species, .monster-element {
+    font-size: 1rem;
+    color: #ccc;
+    margin: 5px 0;
+    text-align: center;
+}
+
+/* Styling für das Monsterbild */
+.monster-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.monster-icon {
+    width: 30px; /* Anpassen je nach gewünschter Größe */
+    height: 30px;
+    object-fit: cover; /* Bild proportional zuschneiden */
+    margin-right: 20px;
+    
+}
+
+
