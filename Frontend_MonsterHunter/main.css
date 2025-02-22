@@ -162,39 +162,3 @@ ul {
     text-shadow: 0 5px 10px black;
 
 }
-
-.monster-card {
-    display: flex;
-    margin: 2rem;
-}
-
-.monster-name {
-    display: flex;
-    width: 100px;
-    height: 100px;
-    color: lightgrey;
-}
-
-.monster-attribute-group-one {
-    display: flex;
-    margin: 1rem;
-}
-
-.monster-attribute-group-two {
-    display: flex;
-    margin: 1rem;
-}
-
-.monster-attribute {
-    display: flex;
-    padding: 5px;
-    letter-spacing: 1px;
-    font-size: large;
-    color: lightgray;
-    white-space: pre-wrap;
-
-}
-
-.monster-attribute strong::first-letter {
-    text-transform: uppercase;
-}

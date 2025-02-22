@@ -1,3 +1,46 @@
+/* Grundsätzliches Layout für die Monsterkarten */
+#monster-list {
+    display: flex;
+    flex-direction: column; /* Vertikale Anordnung */
+    align-items: flex-start; /* Die Karten sollen links ausgerichtet sein */
+    padding: 20px;
+    margin: 0;
+    gap: 10px; /* Abstand zwischen den Karten */
+}
+
+.monster-card {
+    background: #1d1d1d;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 250px;
+    margin: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.monster-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Der Name des Monsters */
+.monster-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center; /* Name zentriert auf der Karte */
+}
+
+/* Beschreibung des Monsters */
+.monster-description {
+    font-size: 1rem;
+    color: #ccc;
+    margin-top: 10px;
+    text-align: center; /* Beschreibung ebenfalls zentriert */
+}
+
+/* Dein bestehendes CSS für .monster-item */
 .monster-item {
     display: flex;
     align-items: center;
@@ -8,4 +51,13 @@ strong {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Optional: Styling für Links, wenn du diese später hinzufügst */
+.monster-card a {
+    color: #fff;
+    text-decoration: none;
+    margin-top: 15px;
+    display: block;
+    text-align: center;
 }

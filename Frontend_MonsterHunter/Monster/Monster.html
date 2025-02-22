@@ -1,49 +1,42 @@
 <!DOCTYPE html>
 <html lang="de">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../main.css">
-        <link rel="stylesheet" href="monster.css">
-        <title>MHWilds Monsterlist</title>
-    </head>
-    <body>
-        <header>
-            <nav class="navigation">
-                <div class="navigation-wrapper">
-                    <div class="navigation-left-container">
-                        <a href="/index.html">
-                            <img class="MonsterHunterLogo"
-                                src="../assets/images/Images/Logoklein.png"
-                                alt="Monster Hunter Wilds Logo">
-                        </a>
-                    </div>
-                    <div class="navigation-right-container">
-                        <ul class="nav-list">
-                            <li class="list-group-element"><a href="../index.html"
-                                    class="navigation-link">Startseite</a></li>
-                            <li class="list-group-element"><a
-                                    href="Monster.html"
-                                    class="navigation-link active">Monster</a></li>
-                            <li class="list-group-element"><a href="../Waffen/waffen.html"
-                                    class="navigation-link">Waffen</a></li>
-                            <li class="list-group-element"><a href="../crafting.html"
-                                    class="navigation-link">Crafting</a></li>
-                            <li class="list-group-element"><a href="#"
-                                    class="navigation-link">Leitpfaden</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <div class="background">
-                <div id="monster-list">
-                        <div id="monster-element"
-                            class="monster-element-view">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-    <script src="./monster.js" defer></script>
-    </body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../main.css">
+    <link rel="stylesheet" href="monster.css">
+    <title>MHWilds Monsterlist</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navigation">
+        <div class="navigation-wrapper">
+          <div class="navigation-left-container">
+            <a href="/index.html">
+              <img class="MonsterHunterLogo" src="../assets/images/Images/Logoklein.png" alt="Monster Hunter Wilds Logo">
+            </a>
+          </div>
+          <div class="navigation-right-container">
+            <ul class="nav-list">
+              <li class="list-group-element"><a href="../index.html" class="navigation-link">Startseite</a></li>
+              <li class="list-group-element"><a href="Monster.html" class="navigation-link active">Monster</a></li>
+              <li class="list-group-element"><a href="../Waffen/waffen.html" class="navigation-link">Waffen</a></li>
+              <li class="list-group-element"><a href="../crafting.html" class="navigation-link">Crafting</a></li>
+              <li class="list-group-element"><a href="#" class="navigation-link">Leitpfaden</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    
+    <div class="background">
+      <!-- Container für die Monsterliste -->
+      <div id="monster-list">
+        <!-- Hier werden die Monsterkarten dynamisch eingefügt -->
+      </div>
+    </div>
+
+    <!-- Verlinkung des JavaScript-Files -->
+    <script src="monster.js" defer></script>
+  </body>
 </html>
