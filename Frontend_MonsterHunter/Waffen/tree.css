@@ -16,7 +16,6 @@
   justify-content: center;
   height: 100%;
   width: 10rem;
-  background-color: rgba(0, 0, 0, 0.4);
 }
 
 button {
@@ -69,12 +68,12 @@ button:active {
 /* checkbox */
 
 .list-group {
+
   display: flex;
-  margin-top: 88px;
   width: 100%;
-  background-color: #0000005e;
-  /* Button Area hat 10rem, man kann mit width: calc() arbeiten, aber flex-grow nimmt sich einfach den übrigen Platz*/
-  z-index: 1;
+  z-index: 2;
+  position: relative;
+  padding-top: 88px;
 }
 
 
