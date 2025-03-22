@@ -1,0 +1,28 @@
+body,
+html {
+    width: 100vh;
+    height: 100vh;
+    background-color: black;
+    color: white;
+}
+
+.tbl {
+    display: flex;
+
+}
+
+table {
+    border: 2px solid lime;
+}
+
+th {
+    border: 2px solid cyan;
+    text-align: center;
+    width: auto;
+}
+
+td,
+tr {
+    border: 2px solid cyan;
+    width: fit-content;
+}

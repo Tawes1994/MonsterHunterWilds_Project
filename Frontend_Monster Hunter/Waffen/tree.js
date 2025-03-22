@@ -13,7 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
         card.dataset.expanded = expanded ? "false" : "true";
     }
 
+<<<<<<< Updated upstream:Frontend_Monster Hunter/Waffen/tree.js
     fetch("/Frontend_Monster Hunter/weapons.json")
+=======
+    fetch("https://wilds.mhdb.io/en/weapons")
+>>>>>>> Stashed changes:Frontend_MonsterHunter/Waffen/tree.js
         .then(response => response.json())
         .then(data => {
             console.log("Geladene Waffen:", data);
@@ -23,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Funktion, die den Waffentyp filtern wird
             function filterWeaponsByType(type) {
-                const loadedweapon = data.filter(weapon => weapon.type === type.toLowerCase());
+                const loadedweapon = data.filter(weapon => weapon.kind === type.toLowerCase());
                 console.log("Gefilterte Waffen:", loadedweapon);
 
                 // Waffendaten als verschachtelte UL-Liste generieren
@@ -35,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // EventListener für jeden Button hinzufügen
             buttons.forEach(button => {
                 button.addEventListener("click", () => {
-                    const weaponType = button.id.split("_")[1].toLowerCase();  // 'GS', 'LS' oder 'DB'
+                    const weaponType = button.id.split("_")[1].toLowerCase();  // 'weapon', 'LS' oder 'DB'
                     console.log("Button ID:", button.id);  // Debug-Ausgabe, um sicherzustellen, dass die ID richtig ist
                     filterWeaponsByType(weaponType);  // Aufruf der Funktion mit dem richtigen Typ
                 });
@@ -50,18 +54,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 let weaponElements = {};
 
                 // **1. Durchlauf: Erstelle alle Waffen-Elemente**
-                weapons.forEach(GS => {
-                    let weaponElement = createWeaponElement(GS);
-                    weaponElements[GS.id] = weaponElement;  // **Richtig speichern**
+                weapons.forEach(weapon => {
+                    let weaponElement = createWeaponElement(weapon);
+                    weaponElements[weapon.id] = weaponElement;  // **Richtig speichern**
                 });
 
                 // **2. Durchlauf: Baue die Hierarchie**
-                weapons.forEach(GS => {
-                    let weaponElement = weaponElements[GS.id];
+                weapons.forEach(weapon => {
+                    let weaponElement = weaponElements[weapon.id];
                     const secChild = weaponElement.children[1];
-                    let parentID = GS.crafting?.previous;
+                    let parentID = weapon.crafting?.previous;
 
-                    if (!parentID || parentID === GS.id) {
+                    if (!parentID || parentID === weapon.id) {
                         treeRoot.appendChild(weaponElement);
                         return;
                     }
@@ -81,16 +85,31 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
-            function createWeaponElement(GS) {
+            function createWeaponElement(weapon) {
                 const li = document.createElement('li');
                 li.setAttribute('class', 'li_tree')
                 const id = `weapons_${counter++}`;
 
-                const ElementType = GS.elements.length > 0 ? GS.elements[0].type : "Kein Element";
-                const Slot = GS.slots.length > 0
-                    ? GS.slots.map(slot => `Stufe ${slot.rank}`).join(", ")
-                    : "Kein Slot";
-                const ElderSeal = GS.elderseal?.affinity || "Kein Siegel";
+                // const ElementType = weapon.elements.length > 0 ? weapon.elements[0].type : "Kein Element";
+                // const Slot = weapon.slots.length > 0
+                //     ? weapon.slots.map(slot => `Stufe ${slot.rank}`).join(", ")
+                //     : "Kein Slot";
+                // const ElderSeal = weapon.elderseal?.affinity || "Kein Siegel";
+
+                let ElementType = "None";
+                if (weapon.specials && weapon.specials.length > 0 && weapon.specials[0].element !== undefined) {
+                    ElementType = weapon.specials[0].element;
+                }
+
+                let wpBefore = "None";
+                if (weapon.crafting.previous && weapon.crafting.previous != null) {
+                    wpBefore = `${weapon.crafting.previous.id}`;
+                }
+
+                let Slot = "None";
+                if (weapon.slots.length > 0) {
+                    Slot = weapon.slots;
+                }
 
                 let ElementIcon = "";
                 switch (ElementType) {
@@ -122,38 +141,37 @@ document.addEventListener("DOMContentLoaded", () => {
                         ElementIcon = '<img class="element-icon" src="../assets/images/Elemente/Sleep.png"></img>';
                         break;
                     default:
-                        ElementIcon = "";
+                        ElementIcon = "None";
                 }
 
                 let tableHTML = `
                 <input type="checkbox" id="${id}" class="checkbox"/>
                     <label class="tree_label" for="${id}">
-                        <span class="label">${GS.name} ${GS.attack.display}</span>
+                        <span class="label">${weapon.name} ${weapon.damage.display}</span>
                     </label>
                     <div class="weapon-details">
                     <table class="bigTbl">
                         <tr>
-                            <td class="gs-title">ID</td>
-                            <td>: ${GS.id}</td>
-                            <td class="gs-title">Waffe vorher</td>
-                            <td>: ${GS.crafting.previous || "Keine"}</td>
+                            <td class="weapon-title">ID</td>
+                            <td>: ${weapon.id}</td>
+                            <td class="weapon-title">Waffe vorher</td>
+                            <td>: ${wpBefore}</td>
                         </tr>
                         <tr>
-                            <td class="gs-title">Name</td>
-                            <td>: ${GS.name}</td>
-                            <td class="gs-title">Attack</td>
-                            <td>: ${GS.attack.display}</td>
+                            <td class="weapon-title">Name</td>
+                            <td>: ${weapon.name}</td>
+                            <td class="weapon-title">Attack</td>
+                            <td>: ${weapon.damage.display}</td>
                         </tr>
                         <tr>
-                            <td class="gs-title">Seltenheit</td>
-                            <td>: ${GS.rarity}</td>
-                            <td class="gs-title">Elderseal</td>
-                            <td>: ${ElderSeal}</td>
+                            <td class="weapon-title">Seltenheit</td>
+                            <td>: ${weapon.rarity}</td>
+
                         </tr>
                         <tr>
-                            <td class="gs-title">Element</td>
+                            <td class="weapon-title">Element</td>
                             <td>: ${ElementIcon}</td>
-                            <td class="gs-title">Slots</td>
+                            <td class="weapon-title">Slots</td>
                             <td>: ${Slot}</td>
                         </tr>
                     </table>
@@ -170,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
                 li.appendChild(subTree);
-                weaponElements[GS.id] = subTree;
+                weaponElements[weapon.id] = subTree;
 
                 return li;
             }

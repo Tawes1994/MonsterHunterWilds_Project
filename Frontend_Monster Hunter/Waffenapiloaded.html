@@ -1,117 +1,114 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./test.css" />
-    <title>API Monsterhunter</title>
-  </head>
 
-  <body>
-    <ul class="card-wrapper">
-      <li id="list-group"></li>
-    </ul>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./test.css" />
+  <title>API Monsterhunter</title>
+</head>
 
-    <script>
-      let listGroup = document.getElementById("list-group");
-      let counter = 0;
+<body>
+  <ul class="card-wrapper">
+    <li id="list-group"></li>
+  </ul>
 
-      // toggle
-      function toggleCard(event) {
-        const card = event.currentTarget;
-        const expanded = card.dataset.expanded === "true";
+  <script>
+    let listGroup = document.getElementById("list-group");
+    let counter = 0;
 
-        if (expanded) {
-          // Wenn bereits expandiert, auf SmallTable zurücksetzen
-          card.querySelector(".content").innerHTML = card.dataset.smallTable;
-        } else {
-          // Wenn nicht expandiert, auf TableHTML wechseln
-          card.querySelector(".content").innerHTML = card.dataset.tableHTML;
-        }
+    // toggle
+    function toggleCard(event) {
+      const card = event.currentTarget;
+      const expanded = card.dataset.expanded === "true";
 
-        card.dataset.expanded = expanded ? "false" : "true";
+      if (expanded) {
+        // Wenn bereits expandiert, auf SmallTable zurücksetzen
+        card.querySelector(".content").innerHTML = card.dataset.smallTable;
+      } else {
+        // Wenn nicht expandiert, auf TableHTML wechseln
+        card.querySelector(".content").innerHTML = card.dataset.tableHTML;
       }
 
-      fetch("/Frontend_Monster Hunter/weapons.json")
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Erste Daten:", data);
+      card.dataset.expanded = expanded ? "false" : "true";
+    }
 
-          const Großschwerter = data.filter(
-            (data) => data.type === "great-sword"
+    fetch("./weapons.json")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Erste Daten:", data);
+
+        const Großschwerter = data.filter(
+          (data) => data.type === "great-sword"
+        );
+        console.log("Neu: ", Großschwerter);
+
+        Großschwerter.forEach((GS) => {
+          let listGroupElement = document.createElement("div");
+          let btnCount = document.getElementById("btn-expand");
+
+          listGroupElement.setAttribute(
+            "id",
+            `GS-Element GS-Element-${counter}`
           );
-          console.log("Neu: ", Großschwerter);
+          listGroupElement.setAttribute(
+            "class",
+            `GS-Element GS-Element-${counter}`
+          );
 
-          Großschwerter.forEach((GS) => {
-            let listGroupElement = document.createElement("div");
-            let btnCount = document.getElementById("btn-expand");
+          //listen
+          listGroupElement.addEventListener("click", toggleCard);
 
-            listGroupElement.setAttribute(
-              "id",
-              `GS-Element GS-Element-${counter}`
-            );
-            listGroupElement.setAttribute(
-              "class",
-              `GS-Element GS-Element-${counter}`
-            );
+          // Hole den Elementtyp oder setze "Kein Element"
+          const ElementType =
+            GS.elements.length > 0 ? GS.elements[0].type : "Kein Element";
+          const Slot =
+            GS.slots.length > 0
+              ? GS.slots.map((slot) => `Stufe ${slot.rank}`).join(", ")
+              : "Kein Slot";
+          const ElderSeal = GS.elderseal?.affinity || "Kein Siegel";
 
-            //listen
-            listGroupElement.addEventListener("click", toggleCard);
+          // Mappe das Element auf ein entsprechendes Icon
+          let ElementIcon = "";
+          switch (ElementType) {
+            case "fire":
+              ElementIcon =
+                '<img class="element-icon" src="./assets/images/Elemente/fireblight.png"></img>';
+              break;
+            case "ice":
+              ElementIcon = '<img class="element-icon" src="./assets/images/Elemente/iceblight.png"></img>';
+              break;
+            case "water":
+              ElementIcon = '<img class="element-icon" src="./assets/images/Elemente/waterblight.png"></img>';
+              break;
+            case "thunder":
+              ElementIcon = '<i class="fas fa-bolt"></i>';
+              break;
+            case "dragon":
+              ElementIcon = '<i class="fas fa-dragon"></i>';
+              break;
+            default:
+              ElementIcon = "";
+          }
 
-            // Hole den Elementtyp oder setze "Kein Element"
-            const ElementType =
-              GS.elements.length > 0 ? GS.elements[0].type : "Kein Element";
-            const Slot =
-              GS.slots.length > 0
-                ? GS.slots.map((slot) => `Stufe ${slot.rank}`).join(", ")
-                : "Kein Slot";
-            const ElderSeal = GS.elderseal?.affinity || "Kein Siegel";
+          //listGroupElement.innerHTML = `ID:  ${GS.id} prev: ${GS.crafting.previous} Name: ${GS.name} Attack: ${GS.attack.display} Seltenheit: ${GS.rarity} Elderseal: ${ElderSeal} Elemente: ${ElementIcon} Slots: ${Slot}`;
 
-            // Mappe das Element auf ein entsprechendes Icon
-            let ElementIcon = "";
-            switch (ElementType) {
-              case "fire":
-                ElementIcon =
-                  '<img class="element-icon" src="./assets/images/Elemente/fireblight.png"></img>';
-                break;
-              case "ice":
-                ElementIcon = '<img class="element-icon" src="./assets/images/Elemente/iceblight.png"></img>';
-                break;
-              case "water":
-                ElementIcon = '<img class="element-icon" src="./assets/images/Elemente/waterblight.png"></img>';
-                break;
-              case "thunder":
-                ElementIcon = '<i class="fas fa-bolt"></i>';
-                break;
-              case "dragon":
-                ElementIcon = '<i class="fas fa-dragon"></i>';
-                break;
-              default:
-                ElementIcon = "";
-            }
+          const colspan = ElementIcon ? "" : 'colspan="2"';
 
-            //listGroupElement.innerHTML = `ID:  ${GS.id} prev: ${GS.crafting.previous} Name: ${GS.name} Attack: ${GS.attack.display} Seltenheit: ${GS.rarity} Elderseal: ${ElderSeal} Elemente: ${ElementIcon} Slots: ${Slot}`;
-
-            const colspan = ElementIcon ? "" : 'colspan="2"';
-
-            let smallTable = `
+          let smallTable = `
               <table>
                 <tr>
                   <td class="smallTitle" ${colspan}>${GS.name}</td>
-                  ${
-                    ElementIcon
-                      ? `<td class="smallElement">${ElementIcon}</td>`
-                      : ""
-                  }
+                  ${ElementIcon
+              ? `<td class="smallElement">${ElementIcon}</td>`
+              : ""
+            }
                 </tr>
               </table>
             `;
 
-            let tableHTML = `
+          let tableHTML = `
             <table class="bigTbl">
                 <tr>
                     <td class="gs-title">ID</td>
@@ -142,19 +139,20 @@
                 </tr>
             </table>`;
 
-            listGroupElement.dataset.smallTable = smallTable;
-            listGroupElement.dataset.tableHTML = tableHTML;
+          listGroupElement.dataset.smallTable = smallTable;
+          listGroupElement.dataset.tableHTML = tableHTML;
 
-            let contentDiv = document.createElement("div");
-            contentDiv.classList.add("content");
-            contentDiv.innerHTML = smallTable;
+          let contentDiv = document.createElement("div");
+          contentDiv.classList.add("content");
+          contentDiv.innerHTML = smallTable;
 
-            listGroupElement.appendChild(contentDiv);
+          listGroupElement.appendChild(contentDiv);
 
-            listGroup.appendChild(listGroupElement);
-            counter++;
-          });
+          listGroup.appendChild(listGroupElement);
+          counter++;
         });
-    </script>
-  </body>
+      });
+  </script>
+</body>
+
 </html>
